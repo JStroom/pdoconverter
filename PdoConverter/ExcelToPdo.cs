@@ -29,7 +29,7 @@ namespace PdoConverter
             pdoDictionary.Add(PdoForm.VOORLETTERS, getValue(excel, ExcelForm.VOORLETTERS).Replace(".", string.Empty));
             pdoDictionary.Add(PdoForm.VOORVOEGSELS, getValue(excel, ExcelForm.VOORVOEGSELS));
             pdoDictionary.Add(PdoForm.DUUR, getValue(excel, ExcelForm.UREN));
-            pdoDictionary.Add(PdoForm.BEDRAG, getValue(excel, ExcelForm.PENSIOEN_GEVEND_LOON));
+            pdoDictionary.Add(PdoForm.BEDRAG, convertToCents(getValue(excel, ExcelForm.PENSIOEN_GEVEND_LOON)));
             pdoDictionary.Add(PdoForm.LAND_NAAM, getValue(excel, ExcelForm.LAND_NAAM));
             pdoDictionary.Add(PdoForm.CODE_LAND, countryToCode.GetCountryCode(getValue(excel, ExcelForm.LAND_NAAM)));
 
@@ -38,6 +38,15 @@ namespace PdoConverter
 
             //DateTime datetime = DateTime.ParseExact(excelDate, "M-d-yyyy", CultureInfo.InvariantCulture);
             pdoDictionary.Add(PdoForm.GEBOORTEDATUM, excelDate.ToString("yyyyMMdd"));
+
+            if (getValue(excel, ExcelForm.BASIS) != null && !getValue(excel, ExcelForm.BASIS).Equals(""))
+                pdoDictionary.Add(PdoForm.CONTRACT, "1");
+            else if (getValue(excel, ExcelForm.PLUS) != null && !getValue(excel, ExcelForm.PLUS).Equals(""))
+                pdoDictionary.Add(PdoForm.CONTRACT, "2");
+            else
+                throw new ApplicationException("Error occured: both Basis and Plus columns are empty.");
+ 
+
 
             if (getValue(excel, ExcelForm.GESLACHT).Equals("Man"))
                 pdoDictionary.Add(PdoForm.GESLACHT, "1");
@@ -77,6 +86,29 @@ namespace PdoConverter
             if (value == null)
                 value = "";
             return value;
+        }
+
+        private string convertToCents(string bedrag)
+        {
+            int euros = 0;
+            int cents = 0;
+
+            if (bedrag.Contains(',')){
+                Match match = Regex.Match(bedrag, @"^[0-9]+", RegexOptions.IgnoreCase); //before the ,
+                euros = Convert.ToInt32(match.Value);
+
+                match = Regex.Match(bedrag, @"(?<=,)[0-9]+", RegexOptions.IgnoreCase); // match after the ,
+                cents = Convert.ToInt32(match.Value);
+
+                if (match.Value.Length < 2) // part after the comma only contained one digit.
+                    cents *= 10;
+            }
+            else
+            {
+                euros = Convert.ToInt32(bedrag);
+            }
+
+            return ((euros * 100) + cents).ToString();
         }
 
         public Dictionary<string, string> getPdoDictionary()

@@ -29,9 +29,12 @@ namespace PdoConverter
         public static string GESLACHT = "Geslacht";
         public static string UREN = "Uren";
         public static string PENSIOEN_GEVEND_LOON = "pensioengev. Sal";
+        public static string BASIS = "basisregeling";
+        public static string PLUS = "Plusregeling";
+
 
         public static string[] mandatoryExcelColumns = { GEBOORTEDATUM, VOORLETTERS, VOORVOEGSELS, NAAM, SOFINUMMER, LAND_NAAM, ADRES, 
-                                                           POSTCODE, GESLACHT, PENSIOEN_GEVEND_LOON, UREN };
+                                                           POSTCODE, GESLACHT, PENSIOEN_GEVEND_LOON, UREN, BASIS, PLUS };
         public static string[] nonNullExcelColumns = { GEBOORTEDATUM, VOORLETTERS, NAAM, SOFINUMMER, LAND_NAAM, ADRES, 
                                                            POSTCODE, GESLACHT, PENSIOEN_GEVEND_LOON, UREN };
         string[] availableExcelColumns;
@@ -225,19 +228,8 @@ namespace PdoConverter
                     throw new ApplicationException("Het geslacht in rij [" + row.Row + "] is geen geen Man of Vrouw");
             }
 
-            if (!excelDictionary.TryGetValue(PENSIOEN_GEVEND_LOON, out value))
+            if (!excelDictionary.TryGetValue(PENSIOEN_GEVEND_LOON, out value)){
                 missing += PENSIOEN_GEVEND_LOON + " ";
-            else
-            {
-                try
-                {
-                    int integer = int.Parse(value);
-                }
-                catch (Exception ex)
-                {
-                    throw new ApplicationException("Het pensioengevend loon in rij[" + row.Row + "] is geen heel getal: " + value +
-                        "\n" + ex.Message);
-                }
             }
 
             if (!excelDictionary.TryGetValue(UREN, out value))
@@ -270,11 +262,11 @@ namespace PdoConverter
             Excel.Worksheet excelWorksheet = null;
             try
             {
-                excelWorksheet = (Excel.Worksheet)sheets.get_Item("MedewerkerNAWLijst_ENTER_BV");
+                excelWorksheet = (Excel.Worksheet)sheets.get_Item("pensioen_gegevens");
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Kan de sheet MedewerkerNAWLijst_ENTER_BV niet vinden");
+                throw new ApplicationException("Kan de sheet pensioen_gegevens niet vinden");
             }
 
             return excelWorksheet;

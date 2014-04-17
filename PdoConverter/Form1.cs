@@ -14,6 +14,7 @@ namespace PdoConverter
 {
     public partial class PdoForm : Form
     {
+        public static string CONTRACT = "Contract";
         public static string SOFINUMMER = "Sofinummer";
         public static string NAAM = "Naam";
         public static string VOORLETTERS = "Voorletters";
@@ -30,7 +31,7 @@ namespace PdoConverter
         public static string DUUR = "Duur";
         public static string BEDRAG = "Bedrag Pensioengevend Loon";
 
-        public static string[] pdoColumns = { SOFINUMMER, NAAM, VOORLETTERS, VOORVOEGSELS, GEBOORTEDATUM, GESLACHT, HUISNUMMER, 
+        public static string[] pdoColumns = { CONTRACT, SOFINUMMER, NAAM, VOORLETTERS, VOORVOEGSELS, GEBOORTEDATUM, GESLACHT, HUISNUMMER, 
         TOEVOEGING, POSTCODE, ADRES_BUITENLAND, OMSCHRIJVING_POSTCODE_PLAATS, CODE_LAND, LAND_NAAM, DUUR, BEDRAG };
 
         DataSet recordsDataSet = new DataSet("RecordType2");
@@ -57,7 +58,6 @@ namespace PdoConverter
             txtTelefoonContactpersoon.Text = prefs.TelefoonContactPersoon;
             txtEmailAdres.Text = prefs.EmailContactPersoon;
             txtNummerWerkgever.Text = prefs.NummerWerkgever;
-            txtNummerContract.Text = prefs.NummerContract;
 
             DateTime thisDay = DateTime.Today;
             txtBoxDatumAanmaakBestand.Text = thisDay.ToString("yyyyMMdd");
@@ -69,6 +69,7 @@ namespace PdoConverter
 
         private void DefineTableColumns()
         {
+            DataColumn contractColumn = new DataColumn(CONTRACT, typeof(int));
             DataColumn sofiNummerColumn = new DataColumn(SOFINUMMER, typeof(int));
             DataColumn naamColumn = new DataColumn(NAAM, typeof(string));
             naamColumn.MaxLength = 25;
@@ -97,7 +98,8 @@ namespace PdoConverter
 
             recordsTable = recordsDataSet.Tables.Add("records");
 
-            recordsTable.Columns.AddRange(new DataColumn[] { 
+            recordsTable.Columns.AddRange(new DataColumn[] {
+                contractColumn,
                 sofiNummerColumn, 
                 naamColumn, 
                 voorlettersColumn, 
@@ -122,12 +124,6 @@ namespace PdoConverter
             if ("".Equals(txtNummerWerkgever.Text))
             {
                 MessageBox.Show("Het nummer werkgever mag niet leeg zijn", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if ("".Equals(txtNummerContract.Text))
-            {
-                MessageBox.Show("Het nummer contract mag niet leeg zijn", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -169,7 +165,7 @@ namespace PdoConverter
                 writer.Write("950");
 
                 writer.Write(UnsignedNumeric(txtNummerWerkgever.Text, 8));
-                writer.Write(UnsignedNumeric(txtNummerContract.Text, 2));
+                writer.Write(UnsignedNumeric(row[CONTRACT], 2));
                 writer.Write(UnsignedNumeric(cmbPeriodeMaand.Text, 2));
                 writer.Write(UnsignedNumeric(cmbPeriodeJaar.Text, 4));
                 writer.Write(UnsignedNumeric(row[SOFINUMMER], 9));
@@ -302,7 +298,6 @@ namespace PdoConverter
             prefs.NaamContactPersoon = txtNaamContactPersoon.Text;
             prefs.TelefoonContactPersoon = txtTelefoonContactpersoon.Text;
             prefs.EmailContactPersoon = txtEmailAdres.Text;
-            prefs.NummerContract = txtNummerContract.Text;
             prefs.NummerWerkgever = txtNummerWerkgever.Text;
 
             prefs.save();
@@ -316,6 +311,12 @@ namespace PdoConverter
                 excel.ShowDialog();
 
                 ArrayList pdoList = excel.getConvertedArrayList();
+
+                if (pdoList.Count > 0)
+                {
+                    recordsTable.Clear();
+                }
+
                 foreach (Dictionary<string, string> pdoDictionary in pdoList)
                 {
                     DataRow row = recordsTable.NewRow();

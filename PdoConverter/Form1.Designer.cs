@@ -30,8 +30,6 @@
         {
             this.recordsGridView = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtNummerContract = new System.Windows.Forms.TextBox();
             this.txtNummerWerkgever = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -90,8 +88,6 @@
             // groupBox1
             // 
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.txtNummerContract);
             this.groupBox1.Controls.Add(this.txtNummerWerkgever);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label7);
@@ -110,23 +106,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Gegevens Enter & bestand";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(283, 152);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(89, 13);
-            this.label12.TabIndex = 23;
-            this.label12.Text = "Nummer Contract";
-            // 
-            // txtNummerContract
-            // 
-            this.txtNummerContract.Location = new System.Drawing.Point(378, 148);
-            this.txtNummerContract.MaxLength = 2;
-            this.txtNummerContract.Name = "txtNummerContract";
-            this.txtNummerContract.Size = new System.Drawing.Size(30, 20);
-            this.txtNummerContract.TabIndex = 22;
             // 
             // txtNummerWerkgever
             // 
@@ -513,8 +492,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportNaarPDOToolStripMenuItem;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtNummerContract;
         private System.Windows.Forms.TextBox txtNummerWerkgever;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox groupBox3;
