@@ -128,6 +128,7 @@ namespace PdoConverter
             }
 
             SaveFileDialog dialog = new SaveFileDialog();
+            dialog.FileName = "PDO" + txtVolgnummerBestand.Text.PadLeft(5, '0').ToString() + ".txt";
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -342,5 +343,10 @@ namespace PdoConverter
             txtControleGetal.Text = controlegetal().ToString();
         }
 
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpForm help = new HelpForm();
+            help.ShowDialog();
+        }
     }
 }

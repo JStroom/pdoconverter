@@ -63,6 +63,7 @@
             this.cmbPeriodeJaar = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.lblBuildVersion = new System.Windows.Forms.Label();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.recordsGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -77,7 +78,7 @@
             this.recordsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.recordsGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.recordsGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.recordsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.recordsGridView.Location = new System.Drawing.Point(12, 211);
             this.recordsGridView.Name = "recordsGridView";
@@ -301,7 +302,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(965, 24);
@@ -429,11 +431,18 @@
             // lblBuildVersion
             // 
             this.lblBuildVersion.AutoSize = true;
-            this.lblBuildVersion.Location = new System.Drawing.Point(741, 8);
+            this.lblBuildVersion.Location = new System.Drawing.Point(720, 9);
             this.lblBuildVersion.Name = "lblBuildVersion";
             this.lblBuildVersion.Size = new System.Drawing.Size(108, 13);
             this.lblBuildVersion.TabIndex = 29;
             this.lblBuildVersion.Text = "Build: 8-4-2014 15:21";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // PdoForm
             // 
@@ -501,6 +510,7 @@
         private System.Windows.Forms.ComboBox cmbPeriodeJaar;
         private System.Windows.Forms.Label lblBuildVersion;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 
